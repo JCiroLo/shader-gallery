@@ -1,0 +1,87 @@
+@import "./button.scss";
+@import "./icon-button.scss";
+@import "./select.scss";
+
+.controls-panel {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  padding: 16px;
+  pointer-events: auto;
+  background: color-mix(in oklab, var(--background) 60%, transparent);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  &--hide {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: unset;
+    transform: translateX(100%);
+  }
+
+  &__properties {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  &__property {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+  }
+}
+
+.controls-panel__visibility-toggle {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translate(0%, -50%);
+  transition: transform 0.2s ease;
+
+  svg {
+    transition: transform 0.2s ease;
+  }
+
+  &--active {
+    transform: translate(50%, -50%);
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.shader-settings-panel-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+
+  &__input-file {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__action {
+    flex-grow: 1;
+    width: 0;
+  }
+}
+
+.effect-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

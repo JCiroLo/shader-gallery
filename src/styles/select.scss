@@ -1,0 +1,54 @@
+.select {
+  position: relative;
+  width: 100%;
+}
+
+.select__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--input-foreground);
+  background-color: color-mix(in oklab, var(--input) 30%, transparent);
+  border-color: var(--input);
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--input) 50%, transparent);
+  }
+}
+
+.select__icon {
+  font-size: 12px;
+}
+
+.select__options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: var(--popover);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px var(--shadow);
+  z-index: 10;
+}
+
+.select__option {
+  padding: 10px 14px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--accent);
+  }
+
+  &.is-selected {
+    background: var(--accent);
+  }
+
+  &[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
