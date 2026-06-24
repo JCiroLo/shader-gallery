@@ -1,11 +1,6 @@
 import { forwardRef, useMemo } from "react";
 import { Effect } from "postprocessing";
-import {
-  Uniform,
-  type Object3D,
-  type WebGLRenderer,
-  type WebGLRenderTarget,
-} from "three";
+import { Uniform, type Object3D, type WebGLRenderer, type WebGLRenderTarget } from "three";
 import warpShader from "../shaders/warp.glsl.js";
 
 type WarpEffectProps = {
@@ -26,11 +21,7 @@ class WarpEffectImpl extends Effect {
     this.time = 0;
   }
 
-  update(
-    renderer: WebGLRenderer,
-    inputBuffer: WebGLRenderTarget,
-    deltaTime: number
-  ) {
+  update(_: WebGLRenderer, __: WebGLRenderTarget, deltaTime: number) {
     this.time += deltaTime;
     this.uniforms.get("uTime")!.value = this.time;
   }

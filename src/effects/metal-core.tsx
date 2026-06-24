@@ -63,26 +63,17 @@ class MetalCoreEffectImpl extends Effect {
     this.time = 0;
   }
 
-  update(
-    renderer: THREE.WebGLRenderer,
-    inputBuffer: THREE.WebGLRenderTarget,
-    deltaTime: number
-  ) {
+  update(_: THREE.WebGLRenderer, inputBuffer: THREE.WebGLRenderTarget, deltaTime: number) {
     this.time += deltaTime;
     this.uniforms.get("time")!.value = this.time;
-    this.uniforms.get("viewportSize")!.value = new THREE.Vector2(
-      inputBuffer.width,
-      inputBuffer.height
-    );
+    this.uniforms.get("viewportSize")!.value = new THREE.Vector2(inputBuffer.width, inputBuffer.height);
   }
 }
 
-const MetalCoreEffect = forwardRef<THREE.Object3D, MetalCoreEffectProps>(
-  (props, ref) => {
-    const effect = useMemo(() => new MetalCoreEffectImpl(props), [props]);
+const MetalCoreEffect = forwardRef<THREE.Object3D, MetalCoreEffectProps>((props, ref) => {
+  const effect = useMemo(() => new MetalCoreEffectImpl(props), [props]);
 
-    return <primitive ref={ref} object={effect} dispose={null} />;
-  }
-);
+  return <primitive ref={ref} object={effect} dispose={null} />;
+});
 
 export default MetalCoreEffect;
