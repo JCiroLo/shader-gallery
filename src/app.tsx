@@ -4,7 +4,6 @@ import ImagePreview from "@/components/image-preview";
 import EffectQueue from "@/components/effect-queue";
 import ShaderSettingsPanel from "@/components/shader-settings-panel";
 import useSettingsStore from "@/stores/settings-store";
-import { OPTIONS_WIDTH } from "@/lib/constants";
 
 function App() {
   const { image } = useSettingsStore();
