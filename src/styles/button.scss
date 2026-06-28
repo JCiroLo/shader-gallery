@@ -10,12 +10,17 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 
-  &:hover {
+  &:hover:not([disabled]) {
     background-color: color-mix(in oklab, var(--primary) 80%, transparent);
   }
 
   &:focus,
   &:focus-visible {
     outline: 4px auto var(--input);
+  }
+
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }

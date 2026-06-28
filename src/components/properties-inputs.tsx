@@ -1,3 +1,6 @@
+import clazz from "@/lib/clazz";
+import type { EffectInputOption } from "@/types";
+
 type ColorInputProps = {
   value: string;
   onChange: (value: string) => void;
@@ -34,9 +37,18 @@ type Array3InputProps = {
 
 type SelectInputProps = {
   value: string;
-  options?: { label: string; value: number }[];
+  options?: EffectInputOption[];
   onChange: (value: string) => void;
 };
+
+type Sampler2DInputProps = {
+  value: string[];
+  onChange: (value: string[]) => void;
+};
+
+const classArray2Input = clazz("array-2-input");
+const classArray3Input = clazz("array-3-input");
+const classSampler2DInput = clazz("sampler-2d-input");
 
 const ColorInput: React.FC<ColorInputProps> = ({ value, onChange }) => {
   return <input type="color" value={value} onChange={(event) => onChange(event.target.value as never)} />;
@@ -63,7 +75,7 @@ const BooleanInput: React.FC<BooleanInputProps> = ({ value, onChange }) => {
 
 const Array2Input: React.FC<Array2InputProps> = ({ value, min, max, step, onChange }) => {
   return (
-    <div>
+    <div className={classArray2Input()}>
       <input
         type="range"
         min={min}
@@ -86,7 +98,7 @@ const Array2Input: React.FC<Array2InputProps> = ({ value, min, max, step, onChan
 
 const Array3Input: React.FC<Array3InputProps> = ({ value, min, max, step, onChange }) => {
   return (
-    <div>
+    <div className={classArray3Input()}>
       <input
         type="range"
         min={min}
@@ -119,11 +131,30 @@ const SelectInput: React.FC<SelectInputProps> = ({ value, options, onChange }) =
   return (
     <select value={value} onChange={(event) => onChange(event.target.value)}>
       {(options || []).map((option) => (
-        <option key={option.value} value={option.value}>
+        <option key={option.key} value={option.key}>
           {option.label}
         </option>
       ))}
     </select>
+  );
+};
+
+const Sampler2d: React.FC<Sampler2DInputProps> = ({ value, onChange }) => {
+  return (
+    <div className={classSampler2DInput()}>
+      {value.map((color, i) => (
+        <input
+          key={i}
+          type="color"
+          value={color}
+          onChange={(e) => {
+            const next = [...value];
+            next[i] = e.target.value;
+            onChange(next);
+          }}
+        />
+      ))}
+    </div>
   );
 };
 
@@ -134,6 +165,7 @@ const PropertiesInputs = {
   array2: Array2Input,
   array3: Array3Input,
   select: SelectInput,
+  sampler2d: Sampler2d,
 };
 
 export default PropertiesInputs;

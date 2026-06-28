@@ -1,3 +1,4 @@
+import React from "react";
 import { ChevronLeftIcon } from "lucide-react";
 import PropertiesInputs from "@/components/properties-inputs";
 import IconButton from "@/components/icon-button";
@@ -28,53 +29,69 @@ const ShaderSettingsPanel = () => {
   const { setEffectProperty, properties } = useEffectsStore();
 
   return (
-    <div className={c({ hide: !optionsVisible })} style={{ width: OPTIONS_WIDTH }}>
+    <div className={c({ hide: !optionsVisible })} style={{ width: `min(calc(100% - 16px), ${OPTIONS_WIDTH}px)` }}>
       <IconButton className={c("visibility-toggle", { active: optionsVisible })} onClick={toggleOptionsVisible}>
         <ChevronLeftIcon />
       </IconButton>
       <Select value={effect} options={effects} placeholder="Effecto" onChange={setEffect} />
-      <hr />
-      <ul className={c("properties")}>
-        {effect !== "none" &&
-          inputs[effect].map((input: EffectInput) => {
-            const type = input.type;
-            const value = properties[effect][input.key];
-            const props = EFFECT_DEFAULTS[effect][input.key];
+      {effect !== "none" && (
+        <>
+          <ul className={c("properties")}>
+            {inputs[effect].map((input: EffectInput) => {
+              const type = input.type;
+              const value = properties[effect][input.key];
+              const props = EFFECT_DEFAULTS[effect][input.key];
+              const options = Object.values(props.options || {}).map((option) => ({
+                key: option.key,
+                label: option.label,
+                value: option.value,
+              }));
 
-            function onChange(newValue: unknown) {
-              if (effect === "none") return;
+              function onChange(newValue: unknown) {
+                if (effect === "none") return;
 
-              setEffectProperty(effect, input.key as keyof EffectInput[], newValue);
-            }
+                setEffectProperty(effect, input.key as keyof EffectInput[], newValue);
+              }
 
-            return (
-              <li key={effect + props.key} className={c("property")} role="group">
-                <label>{input.label}</label>
-                {type === "color" && <PropertiesInputs.color value={value as string} onChange={onChange} />}
-                {type === "number" && (
-                  <PropertiesInputs.number
-                    value={value as number}
-                    min={props.min}
-                    max={props.max}
-                    step={props.step}
-                    onChange={onChange}
-                  />
-                )}
-                {type === "boolean" && <PropertiesInputs.boolean value={value as boolean} onChange={onChange} />}
-                {type === "array-2" && (
-                  <PropertiesInputs.array2 value={value as [number, number]} onChange={onChange} />
-                )}
-                {type === "array-3" && (
-                  <PropertiesInputs.array3 value={value as [number, number, number]} onChange={onChange} />
-                )}
-                {type === "select" && (
-                  <PropertiesInputs.select value={value as string} options={props.options} onChange={onChange} />
-                )}
-              </li>
-            );
-          })}
-      </ul>
-      <hr />
+              return (
+                <React.Fragment key={effect + props.key}>
+                  <hr />
+                  <li className={c("property")} role="group">
+                    <label>
+                      {input.label}
+                      {type === "number" && <span className={c("property-value")}>({value as string})</span>}
+                    </label>
+                    {type === "color" && <PropertiesInputs.color value={value as string} onChange={onChange} />}
+                    {type === "number" && (
+                      <PropertiesInputs.number
+                        value={value as number}
+                        min={props.min}
+                        max={props.max}
+                        step={props.step}
+                        onChange={onChange}
+                      />
+                    )}
+                    {type === "boolean" && <PropertiesInputs.boolean value={value as boolean} onChange={onChange} />}
+                    {type === "array-2" && (
+                      <PropertiesInputs.array2 value={value as [number, number]} onChange={onChange} />
+                    )}
+                    {type === "array-3" && (
+                      <PropertiesInputs.array3 value={value as [number, number, number]} onChange={onChange} />
+                    )}
+                    {type === "select" && (
+                      <PropertiesInputs.select value={value as string} options={options} onChange={onChange} />
+                    )}
+                    {type === "sampler-2d" && (
+                      <PropertiesInputs.sampler2d value={value as string[]} onChange={onChange} />
+                    )}
+                  </li>
+                </React.Fragment>
+              );
+            })}
+          </ul>
+        </>
+      )}
+
       <ShaderActions />
     </div>
   );

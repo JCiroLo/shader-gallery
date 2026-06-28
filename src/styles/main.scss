@@ -1,6 +1,6 @@
-@import "./button.scss";
-@import "./icon-button.scss";
-@import "./select.scss";
+@use "./button.scss";
+@use "./icon-button.scss";
+@use "./select.scss";
 
 .controls-panel {
   position: fixed;
@@ -28,7 +28,6 @@
   &__properties {
     display: flex;
     flex-direction: column;
-    gap: 16px;
     margin: 0;
     padding: 0;
     overflow-y: auto;
@@ -40,6 +39,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 16px;
+
+    @media (width < 416px) {
+      flex-direction: column;
+    }
+  }
+
+  &__property-value {
+    margin-left: 1ch;
+    color: var(--secondary-foreground);
+    font-size: 0.75rem;
   }
 }
 
@@ -66,7 +75,15 @@
 .shader-settings-panel-actions {
   display: flex;
   gap: 8px;
-  margin-top: auto;
+  padding-top: 8px;
+
+  @media (width < 416px) {
+    flex-direction: column;
+  }
+
+  &__wrapper {
+    margin-top: auto;
+  }
 
   &__input-file {
     opacity: 0;
@@ -77,6 +94,10 @@
   &__action {
     flex-grow: 1;
     width: 0;
+
+    @media (width < 416px) {
+      width: 100%;
+    }
   }
 }
 
@@ -84,4 +105,20 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.sampler-2d-input {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  input {
+    border: none;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+  }
 }

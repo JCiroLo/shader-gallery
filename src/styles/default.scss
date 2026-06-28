@@ -129,3 +129,8 @@ input[type="range"] {
 input[type="checkbox"] {
   accent-color: var(--primary);
 }
+
+hr {
+  width: 100%;
+  border-color: var(--border);
+}

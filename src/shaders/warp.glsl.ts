@@ -1,10 +1,9 @@
 export default `
-  uniform float uTime;
-  uniform float uIntensity;
+  uniform float time;
+  uniform float intensity;
 
   void mainUv(inout vec2 uv) {
-    // Distorsión sinusoidal de las coordenadas UV
-    uv.y += sin(uv.x * 10.0 + uTime) * uIntensity;
-    uv.x += cos(uv.y * 10.0 + uTime) * uIntensity;
+    uv.y += sin(uv.x * 10.0 + time) * intensity;
+    uv.x += cos(uv.y * 10.0 + time) * intensity;
   }
 `;

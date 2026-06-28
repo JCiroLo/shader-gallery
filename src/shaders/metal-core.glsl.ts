@@ -17,7 +17,7 @@ export default `
   uniform vec3 tintColor;
   uniform float tintStrength;
 
-  uniform vec2 viewportSize;
+  uniform vec2 resolution;
   uniform float time;
 
   float bayer4x4(vec2 p){
@@ -79,8 +79,8 @@ export default `
   }
 
   void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outColor){
-      vec2 px = 1.0 / viewportSize;
-      if(viewportSize.x <= 0.0) {
+      vec2 px = 1.0 / resolution;
+      if(resolution.x <= 0.0) {
           px = vec2(1.0) / vec2(textureSize(inputBuffer, 0));
       }
 

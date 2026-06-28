@@ -1,9 +1,24 @@
-export type Effect = "none" | "tint" | "warp" | "crt" | "crt-vhs" | "lens-array" | "metal-core" | "posterize";
+export type Effect =
+  | "none"
+  | "tint"
+  | "warp"
+  | "simple-crt-vhs"
+  | "crt"
+  | "crt-vhs"
+  | "film-grain"
+  | "lens-array"
+  | "metal-core"
+  | "posterize"
+  | "sepia"
+  | "ps1"
+  | "dithering-plus-color-palettes"
+  | "analog-monochrome-monitor"
+  | "bloom";
 
 export type EffectInput = {
   key: string;
   label: string;
-  type: "color" | "number" | "boolean" | "array-2" | "array-3" | "select";
+  type: "color" | "number" | "boolean" | "array-2" | "array-3" | "select" | "sampler-2d";
   value: unknown;
 
   // for number, array-2, array-3
@@ -12,75 +27,13 @@ export type EffectInput = {
   step?: number;
 
   // for select
-  options?: { label: string; value: number }[];
+  options?: Record<string, EffectInputOption>;
 };
+
+export type EffectInputOption = { key: string; label: string; value: number | string[] };
 
 export type EffectsOptions = Record<Exclude<Effect, "none">, EffectInput[]>;
 
 export type CrtEffect = {
   pixelSize: number;
-};
-
-export type CrtVhsEffect = {
-  scanlinesOpacity: number;
-  scanlinesWidth: number;
-  grilleOpacity: number;
-  pixelate: boolean;
-  roll: boolean;
-  rollSpeed: number;
-  rollSize: number;
-  rollVariation: number;
-  distortIntensity: number;
-  noiseOpacity: number;
-  noiseSpeed: number;
-  staticNoiseIntensity: number;
-  aberration: number;
-  brightness: number;
-  discolor: boolean;
-  warpAmount: number;
-  clipWarp: boolean;
-  vignetteIntensity: number;
-  vignetteOpacity: number;
-};
-
-export type LensArrayEffect = {
-  gridSize: number;
-  curvature: number;
-  gridAngle: number;
-  shape: number;
-  scale: [number, number];
-  stagger: boolean;
-};
-
-export type MetalCoreEffect = {
-  exposure: number;
-  contrast: number;
-  saturation: number;
-  enablePixelate: boolean;
-  pixelFactor: number;
-  enablePosterize: boolean;
-  colorLevels: number;
-  ditherStrength: number;
-  chromAberration: number;
-  vignetteStrength: number;
-  grainStrength: number;
-  tintColor: [number, number, number];
-  tintStrength: number;
-  viewportSize: [number, number];
-  time?: number;
-};
-
-export type PosterizerEffect = {
-  noiseScale: number;
-  colorLevels: number;
-  ditherStrength: number;
-};
-
-export type TintEffect = {
-  color: string;
-  opacity: number;
-};
-
-export type WarpEffect = {
-  intensity: number;
 };

@@ -1,6 +1,6 @@
 export default `
-  uniform float pixelSize;
-  uniform vec2 tSize; 
+  uniform float pixel_size;
+  uniform vec2 resolution; 
   
   float bayerDither(vec2 p) {
       int x = int(mod(p.x, 4.0));
@@ -22,22 +22,22 @@ export default `
 
   void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
       vec2 coord = gl_FragCoord.xy;
-      vec2 pixelOrigin = floor(coord / pixelSize) * pixelSize;
+      vec2 pixelOrigin = floor(coord / pixel_size) * pixel_size;
       
-      vec2 centerUv = pixelOrigin / tSize;
+      vec2 centerUv = pixelOrigin / resolution;
       
-      vec4 color = texture2D(inputBuffer, centerUv + (pixelSize / tSize) * 0.5);
+      vec4 color = texture2D(inputBuffer, centerUv + (pixel_size / resolution) * 0.5);
       
       float luma = dot(color.rgb, vec3(0.299, 0.587, 0.114));
       float isRed = step(color.g + color.b, color.r * 1.2);
             
-      vec2 ditherCoord = coord / pixelSize;
+      vec2 ditherCoord = coord / pixel_size;
       float dither = bayerDither(ditherCoord);
       
       float lit = 0.0;
       if (luma + (dither * 0.3) > 0.4) lit = 1.0; 
 
-      vec2 uvPixel = fract(coord / pixelSize);
+      vec2 uvPixel = fract(coord / pixel_size);
       vec2 gap = vec2(0.15, 0.15); 
       vec2 maskBox = step(gap, uvPixel) * step(uvPixel, 1.0 - gap);
       float mask = maskBox.x * maskBox.y;

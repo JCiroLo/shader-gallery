@@ -24,19 +24,24 @@ const ShaderActions = () => {
   };
 
   return (
-    <div className={c()}>
-      <input
-        ref={inputFileRef}
-        className={c("input-file")}
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        hidden
-      />
-      <button className={c("action")} onClick={() => inputFileRef.current?.click()}>
-        Subir Imagen
-      </button>
-      <button className={c("action")}>Exportar</button>
+    <div className={c("wrapper")}>
+      <hr />
+      <div className={c()}>
+        <input
+          ref={inputFileRef}
+          className={c("input-file")}
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          hidden
+        />
+        <button className={c("action")} onClick={() => inputFileRef.current?.click()}>
+          Subir Imagen
+        </button>
+        <button disabled className={c("action")}>
+          Exportar
+        </button>
+      </div>
     </div>
   );
 };

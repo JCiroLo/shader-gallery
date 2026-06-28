@@ -1,28 +1,14 @@
-import { forwardRef, useMemo } from "react";
-import * as THREE from "three";
-import { Effect } from "postprocessing";
-import crtShader from "../shaders/crt.glsl";
-import type { CrtEffect as CrtEffectType } from "@/types";
+import { useMemo } from "react";
+import Effect from "@/components/effect";
+import crtShader from "@/shaders/crt.glsl";
+import useEffectsStore from "@/stores/effects-store";
 
-type CrtEffectProps = CrtEffectType;
+const CrtEffect = () => {
+  const properties = useEffectsStore((state) => state.properties["crt"]);
 
-class CrtEffectImpl extends Effect {
-  constructor({ pixelSize = 8.0 } = {}) {
-    super("CrtEffect", crtShader, {
-      uniforms: new Map<string, THREE.Uniform<unknown>>([
-        ["pixelSize", new THREE.Uniform(pixelSize)],
-        ["tSize", new THREE.Uniform(new THREE.Vector2(0, 0))],
-      ]),
-    });
-  }
+  const uniforms = useMemo(() => [{ name: "pixel_size", value: properties.pixelSize as number }], [properties]);
 
-  update(_: THREE.WebGLRenderer, inputBuffer: THREE.WebGLRenderTarget) {
-    this.uniforms.get("tSize")!.value = new THREE.Vector2(inputBuffer.width, inputBuffer.height);
-  }
-}
+  return <Effect name="Crt" shader={crtShader} uniforms={uniforms} />;
+};
 
-export const CrtEffect = forwardRef<THREE.Object3D, CrtEffectProps>((props, ref) => {
-  const effect = useMemo(() => new CrtEffectImpl(props), [props]);
-
-  return <primitive ref={ref} object={effect} dispose={null} />;
-});
+export default CrtEffect;
