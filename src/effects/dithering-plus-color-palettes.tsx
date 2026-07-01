@@ -4,6 +4,7 @@ import ditheringPlusColorPalettesShader from "@/shaders/dithering-plus-color-pal
 import useEffectsStore from "@/stores/effects-store";
 import TextureTools from "@/lib/texture-tools";
 import { EFFECT_DEFAULTS } from "@/lib/constants";
+import type { EffectInputSelect } from "@/types";
 
 const DitheringPlusColorPalettesEffect = () => {
   const properties = useEffectsStore((state) => state.properties["dithering-plus-color-palettes"]);
@@ -17,7 +18,8 @@ const DitheringPlusColorPalettesEffect = () => {
       {
         name: "pal",
         value: TextureTools.buildPalette(
-          EFFECT_DEFAULTS["dithering-plus-color-palettes"].pal.options![properties.pal as string].value as string[],
+          (EFFECT_DEFAULTS["dithering-plus-color-palettes"].pal as EffectInputSelect).options![properties.pal as string]
+            .value as string[],
         ),
       },
     ],

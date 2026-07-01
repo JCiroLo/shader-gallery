@@ -1,0 +1,14 @@
+.effect-actions {
+  display: flex;
+  gap: 8px;
+
+  &__action {
+    background: transparent;
+    color: var(--secondary-foreground);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

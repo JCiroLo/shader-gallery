@@ -1,0 +1,36 @@
+.scene-actions {
+  position: absolute;
+  bottom: 8px;
+  right: 50%;
+  display: flex;
+  gap: 8px;
+  transform: translateX(50%);
+
+  &__section {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 32px;
+    border: 1px solid var(--border);
+    background-color: color-mix(in oklab, var(--background) 60%, transparent);
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    margin-inline: 4px 2px;
+    stroke: var(--muted-foreground);
+  }
+
+  &__label {
+    margin: 0 0 0 4px;
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+
+  &__action svg {
+    width: 16px;
+    height: 16px;
+  }
+}

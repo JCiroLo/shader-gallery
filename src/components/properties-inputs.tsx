@@ -1,5 +1,5 @@
 import clazz from "@/lib/clazz";
-import type { EffectInputOption } from "@/types";
+import type { EffectInputSelectOption } from "@/types";
 
 type ColorInputProps = {
   value: string;
@@ -37,7 +37,7 @@ type Array3InputProps = {
 
 type SelectInputProps = {
   value: string;
-  options?: EffectInputOption[];
+  options?: EffectInputSelectOption[];
   onChange: (value: string) => void;
 };
 

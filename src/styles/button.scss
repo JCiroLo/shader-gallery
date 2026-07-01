@@ -8,9 +8,14 @@ button {
   background-color: var(--primary);
   color: var(--primary-foreground);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    color 0.25s ease;
 
   &:hover:not([disabled]) {
+    color: var(--primary-foreground);
     background-color: color-mix(in oklab, var(--primary) 80%, transparent);
   }
 

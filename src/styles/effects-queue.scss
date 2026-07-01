@@ -1,0 +1,52 @@
+@use "./constants.scss" as consts;
+
+.effects-queue {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+
+  &__effect {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__effect-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    overflow: hidden;
+    background: var(--border);
+
+    @media (width < consts.$mobile) {
+      padding: 4px;
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--foreground);
+    }
+  }
+
+  &__no-layers {
+    margin-block: 12px;
+    text-align: center;
+    color: var(--muted-foreground);
+  }
+}

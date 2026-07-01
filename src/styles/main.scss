@@ -1,103 +1,44 @@
+// ui components
 @use "./button.scss";
 @use "./icon-button.scss";
 @use "./select.scss";
 
-.controls-panel {
-  position: fixed;
-  top: 8px;
-  right: 8px;
-  bottom: 8px;
+// global
+@use "./constants.scss" as consts;
+
+// layout components
+@use "./app-actions";
+@use "./effect-actions";
+@use "./effects-panel";
+@use "./effects-list.scss";
+@use "./effects-queue.scss";
+@use "./effects-properties";
+@use "./effects-properties-tabs";
+@use "./scene-actions";
+
+* {
+  transition: height 0.2s ease-out;
+}
+
+main {
   display: flex;
-  gap: 16px;
-  flex-direction: column;
-  padding: 16px;
-  pointer-events: auto;
-  background: color-mix(in oklab, var(--background) 60%, transparent);
-  border-radius: 16px;
-  backdrop-filter: blur(16px);
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  width: 100vw;
+  height: 100vh;
+  background: var(--background);
+  overflow: hidden;
 
-  &--hide {
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: unset;
-    transform: translateX(100%);
-  }
-
-  &__properties {
-    display: flex;
+  @media (width < consts.$mobile) {
     flex-direction: column;
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-  }
-
-  &__property {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 16px;
-
-    @media (width < 416px) {
-      flex-direction: column;
-    }
-  }
-
-  &__property-value {
-    margin-left: 1ch;
-    color: var(--secondary-foreground);
-    font-size: 0.75rem;
   }
 }
 
-.controls-panel__visibility-toggle {
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  transform: translate(0%, -50%);
-  transition: transform 0.2s ease;
+.canvas-wrapper {
+  position: relative;
+  width: calc(100% - var(--settings-panel-width));
 
-  svg {
-    transition: transform 0.2s ease;
-  }
-
-  &--active {
-    transform: translate(50%, -50%);
-
-    svg {
-      transform: rotate(180deg);
-    }
-  }
-}
-
-.shader-settings-panel-actions {
-  display: flex;
-  gap: 8px;
-  padding-top: 8px;
-
-  @media (width < 416px) {
-    flex-direction: column;
-  }
-
-  &__wrapper {
-    margin-top: auto;
-  }
-
-  &__input-file {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  &__action {
-    flex-grow: 1;
-    width: 0;
-
-    @media (width < 416px) {
-      width: 100%;
-    }
+  @media (width < consts.$mobile) {
+    width: 100%;
+    height: calc(100% - var(--settings-panel-height));
   }
 }
 

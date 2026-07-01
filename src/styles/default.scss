@@ -101,14 +101,11 @@ a {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
   position: fixed;
+  z-index: 1000;
   top: 16px;
   left: 16px;
   margin: 0;

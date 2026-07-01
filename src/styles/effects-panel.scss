@@ -1,0 +1,37 @@
+@use "./constants.scss" as consts;
+
+.effects-panel {
+  display: flex;
+  flex-direction: column;
+  width: var(--settings-panel-width);
+  padding: 16px;
+  pointer-events: auto;
+  background: color-mix(in oklab, var(--background) 60%, transparent);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  @media (width < consts.$mobile) {
+    width: 100%;
+    height: var(--settings-panel-height);
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__tab {
+    flex: 1;
+    width: 0;
+
+    &:not(&--active) {
+      background: var(--border);
+      color: var(--secondary-foreground);
+      outline: 1px solid var(--border);
+    }
+  }
+}

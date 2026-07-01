@@ -1,0 +1,109 @@
+@use "./constants.scss" as consts;
+
+.effects-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  scroll-snap-type: x mandatory;
+
+  @media (width < consts.$mobile) {
+    display: flex;
+    height: 80px;
+    overflow-x: auto;
+  }
+
+  &__effect {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 0.75;
+    scroll-snap-align: start;
+  }
+
+  &__effect-button {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 0;
+    border-radius: 4px;
+    border: none;
+    overflow: hidden;
+    background: transparent;
+
+    &:hover {
+      img {
+        opacity: 1;
+      }
+
+      .effects-list__effect-background {
+        opacity: 0.75;
+      }
+    }
+
+    &--active {
+      filter: grayscale(1);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+    }
+
+    p {
+      position: absolute;
+      z-index: 3;
+      width: 100%;
+      margin: 0;
+      padding-bottom: 4%;
+      text-align: center;
+      text-wrap: balance;
+      font-size: 0.8em;
+      color: var(--foreground);
+    }
+  }
+
+  &__effect-options-icon {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: 50%;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(50%, -50%);
+    stroke: var(--foreground);
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__effect-background {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    background: linear-gradient(to top, #000 0%, transparent 100%);
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

@@ -1,22 +1,41 @@
 import { create } from "zustand";
-import type { Effect } from "@/types";
+import { DEFAULT_EFFECTS_PANEL_SIZE, DEFAULT_IMAGE } from "@/lib/constants";
+import type { Effect, Tab } from "@/types";
+
+type EffectsPanelSize = {
+  width: number;
+  height: {
+    default: number;
+    active: number;
+  };
+};
 
 type SettingsStore = {
-  effect: Effect;
   image: string;
+  tab: Tab;
+  previousTab: Tab;
+  effect: Effect | null;
   optionsVisible: boolean;
-  setEffect: (effect: Effect) => void;
+  effectsPanelSize: EffectsPanelSize;
   setImage: (image: string) => void;
+  setTab: (tab: Tab) => void;
+  setEffect: (effect: Effect | null) => void;
   toggleOptionsVisible: () => void;
+  setEffectsPanelSize: (size: EffectsPanelSize) => void;
 };
 
 const useSettingsStore = create<SettingsStore>((set, get) => ({
-  effect: "none",
-  image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1964&q=80",
+  image: DEFAULT_IMAGE,
+  tab: "effects",
+  previousTab: "effects",
+  effect: null,
   optionsVisible: true,
-  setEffect: (effect: Effect) => set({ effect }),
-  setImage: (image: string) => set({ image }),
+  effectsPanelSize: DEFAULT_EFFECTS_PANEL_SIZE,
+  setImage: (image) => set({ image }),
+  setTab: (tab) => set({ tab, previousTab: get().tab }),
+  setEffect: (effect) => set({ effect }),
   toggleOptionsVisible: () => set({ optionsVisible: !get().optionsVisible }),
+  setEffectsPanelSize: (size) => set({ effectsPanelSize: size }),
 }));
 
 export default useSettingsStore;

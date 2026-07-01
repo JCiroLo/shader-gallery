@@ -3,7 +3,7 @@ import React from "react";
 type IconButtonProps = {
   children: React.ReactNode;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const IconButton: React.FC<IconButtonProps> = ({ children, className, onClick }) => {

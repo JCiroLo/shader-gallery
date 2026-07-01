@@ -1,0 +1,42 @@
+.effects-properties {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  &__property {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 8px;
+
+    @media (width < 416px) {
+      flex-direction: column;
+    }
+  }
+
+  &__property-value {
+    margin-left: 1ch;
+    color: var(--secondary-foreground);
+    font-size: 0.75rem;
+  }
+}

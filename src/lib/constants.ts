@@ -1,9 +1,152 @@
-import type { Effect, EffectInput } from "@/types";
+import {
+  AntennaIcon,
+  ApertureIcon,
+  ArrowLeftRightIcon,
+  ArrowUpDownIcon,
+  BarrelIcon,
+  BlendIcon,
+  CameraIcon,
+  CircleArrowOutDownRightIcon,
+  ContrastIcon,
+  DiffIcon,
+  DraftingCompassIcon,
+  DropletOffIcon,
+  FeatherIcon,
+  GaugeIcon,
+  Grid3x3Icon,
+  Layers2Icon,
+  LightbulbIcon,
+  MaximizeIcon,
+  PaintBucketIcon,
+  PaintbrushIcon,
+  PaletteIcon,
+  PencilIcon,
+  RadiusIcon,
+  Rows4Icon,
+  RulerIcon,
+  Scale3dIcon,
+  ScalingIcon,
+  ScissorsLineDashedIcon,
+  ShapesIcon,
+  ShellIcon,
+  SplineIcon,
+  SprayCanIcon,
+  SquareStackIcon,
+  SunIcon,
+  TriangleDashedIcon,
+  TvIcon,
+  ZodiacAquariusIcon,
+} from "lucide-react";
+import type { Effect, EffectInput, EffectInputIcon, EffectProperties } from "@/types";
 
-export const OPTIONS_WIDTH = 400;
+export const DEFAULT_IMAGE =
+  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1964&q=80";
+
+export const DEFAULT_EFFECTS_PANEL_SIZE = {
+  width: 400,
+  height: {
+    default: 160,
+    active: 212,
+  },
+};
+
+export const EFFECT_KEYS: Effect[] = [
+  "tint",
+  "warp",
+  "simple-crt-vhs",
+  "crt-vhs",
+  "crt",
+  "film-grain",
+  "lens-array",
+  "metal-core",
+  "posterize",
+  "sepia",
+  "ps1",
+  "dithering-plus-color-palettes",
+  "analog-monochrome-monitor",
+  "bloom",
+];
+
+export const EFFECT_PROPERTIES: { [K in Effect]: EffectProperties[K][] } = {
+  tint: ["color", "opacity"],
+  warp: ["intensity"],
+  crt: ["pixelSize"],
+  "simple-crt-vhs": [
+    "scanlines1",
+    "scanlines2",
+    "scanReduction",
+    "vinnetteAlpla",
+    "vinnetteInnerRadius",
+    "vinnetteOuterRadius",
+  ],
+  "crt-vhs": [
+    "scanlinesOpacity",
+    "scanlinesWidth",
+    "grilleOpacity",
+    "pixelate",
+    "roll",
+    "rollSpeed",
+    "rollSize",
+    "rollVariation",
+    "distortIntensity",
+    "noiseOpacity",
+    "noiseSpeed",
+    "staticNoiseIntensity",
+    "aberration",
+    "brightness",
+    "discolor",
+    "warpAmount",
+    "clipWarp",
+    "vignetteIntensity",
+    "vignetteOpacity",
+  ],
+  "film-grain": ["amount", "speed"],
+  "lens-array": ["gridSize", "curvature", "gridAngle", "shape", "scale", "stagger"],
+  "metal-core": [
+    "exposure",
+    "contrast",
+    "saturation",
+    "enablePixelate",
+    "pixelFactor",
+    "enablePosterize",
+    "colorLevels",
+    "ditherStrength",
+    "chromAberration",
+    "vignetteStrength",
+    "grainStrength",
+    "tintColor",
+    "tintStrength",
+  ],
+  posterize: ["noiseScale", "colorLevels", "ditherStrength"],
+  sepia: [
+    "noiseScale",
+    "vignetteStrength",
+    "sepiaStrength",
+    "contrast",
+    "glowRange",
+    "glowStrength",
+    "glowFalloff",
+    "dirtStrength",
+    "glowFalloff",
+    "dirtStrength",
+    "dirtScale",
+  ],
+  ps1: [
+    "colorBitDepth",
+    "ditherStrength",
+    "jitterAmount",
+    "jitterSpeed",
+    "jitterFrequency",
+    "chromaticAberrationStrength",
+    "vignetteStrength",
+    "vignetteRadius",
+  ],
+  "dithering-plus-color-palettes": ["rows", "cols", "ditherSize", "ditherAmount", "pal"],
+  "analog-monochrome-monitor": ["opacity", "pixelSize", "greyscale", "contrast", "pixelColors", "backgroundColor"],
+  bloom: ["strength", "radius", "threshold", "softness", "saturationWeight"],
+};
 
 export const EFFECT_NAMES: Record<Effect, string> = {
-  none: "Ninguno",
   tint: "Tint",
   warp: "Warp",
   "simple-crt-vhs": "Simple CRT VHS",
@@ -15,8 +158,8 @@ export const EFFECT_NAMES: Record<Effect, string> = {
   posterize: "Posterize",
   sepia: "Sepia",
   ps1: "PS1 ",
-  "dithering-plus-color-palettes": "Dithering + Color Palettes",
-  "analog-monochrome-monitor": "Analog Monochrome Monitor",
+  "dithering-plus-color-palettes": "Color Palettes",
+  "analog-monochrome-monitor": "Analog Monitor",
   bloom: "Bloom",
 };
 
@@ -25,12 +168,14 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     color: {
       key: "color",
       label: "Color",
+      icon: "paint-bucket",
       type: "color",
       value: "#ff0055",
     },
     opacity: {
       key: "opacity",
       label: "Opacity",
+      icon: "blend",
       type: "number",
       value: 0.8,
       min: 0,
@@ -41,6 +186,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     intensity: {
       key: "intensity",
       label: "Intensity",
+      icon: "shell",
       type: "number",
       value: 0.05,
       min: 0,
@@ -51,6 +197,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     scanlines1: {
       key: "scanlines1",
       label: "Scanlines 1",
+      icon: "tv",
       type: "number",
       value: 500.0,
       min: 0.0,
@@ -60,6 +207,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     scanlines2: {
       key: "scanlines2",
       label: "Scanlines 2",
+      icon: "tv",
       type: "number",
       value: 25.0,
       min: 0.0,
@@ -68,7 +216,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     scanReduction: {
       key: "scanReduction",
-      label: "Scan Reduction",
+      label: "Scan reduction",
+      icon: "antenna",
       type: "number",
       value: 0.1,
       min: 0.0,
@@ -77,7 +226,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vinnetteAlpla: {
       key: "vinnetteAlpla",
-      label: "Vinnette Alpha",
+      label: "Vinnette alpha",
+      icon: "maximize",
       type: "number",
       value: 1.0,
       min: 0.0,
@@ -86,7 +236,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vinnetteInnerRadius: {
       key: "vinnetteInnerRadius",
-      label: "Vinnette Inner Radius",
+      label: "Vinnette inner radius",
+      icon: "radius",
       type: "number",
       value: 0.0,
       min: 0.0,
@@ -95,7 +246,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vinnetteOuterRadius: {
       key: "vinnetteOuterRadius",
-      label: "Vinnette Outer Radius",
+      label: "Vinnette outer radius",
+      icon: "circle-arrow-out-down-right",
       type: "number",
       value: 1.0,
       min: 0.0,
@@ -106,7 +258,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
   "crt-vhs": {
     scanlinesOpacity: {
       key: "scanlinesOpacity",
-      label: "Scanlines_Opacity",
+      label: "Scanlines opacity",
+      icon: "tv",
       type: "number",
       value: 0.4,
       min: 0,
@@ -114,7 +267,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     scanlinesWidth: {
       key: "scanlinesWidth",
-      label: "Scanlines_Width",
+      label: "Scanlines width",
+      icon: "tv",
       type: "number",
       value: 0.25,
       min: 0,
@@ -122,7 +276,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     grilleOpacity: {
       key: "grilleOpacity",
-      label: "Grille_Opacity",
+      label: "Grille opacity",
+      icon: "rows-4",
       type: "number",
       value: 0.3,
       min: 0,
@@ -131,18 +286,21 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     pixelate: {
       key: "pixelate",
       label: "Pixelate",
+      icon: "square-stack",
       type: "boolean",
       value: true,
     },
     roll: {
       key: "roll",
       label: "Roll",
+      icon: "tv",
       type: "boolean",
       value: true,
     },
     rollSpeed: {
       key: "rollSpeed",
-      label: "Roll_Speed",
+      label: "Roll speed",
+      icon: "tv",
       type: "number",
       value: 8.0,
       min: 0,
@@ -150,7 +308,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     rollSize: {
       key: "rollSize",
-      label: "Roll_Size",
+      label: "Roll size",
+      icon: "tv",
       type: "number",
       value: 15.0,
       min: 0,
@@ -159,7 +318,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     rollVariation: {
       key: "rollVariation",
-      label: "Roll_Variation",
+      label: "Roll variation",
+      icon: "tv",
       type: "number",
       value: 1.8,
       min: 0,
@@ -167,7 +327,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     distortIntensity: {
       key: "distortIntensity",
-      label: "Distort_Intensity",
+      label: "Distort intensity",
+      icon: "barrel",
       type: "number",
       value: 0.05,
       min: 0,
@@ -175,7 +336,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     noiseOpacity: {
       key: "noiseOpacity",
-      label: "Noise_Opacity",
+      label: "Noise opacity",
+      icon: "zodiac-aquarius",
       type: "number",
       value: 0.4,
       min: 0,
@@ -183,7 +345,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     noiseSpeed: {
       key: "noiseSpeed",
-      label: "Noise_Speed",
+      label: "Noise speed",
+      icon: "zodiac-aquarius",
       type: "number",
       value: 5.0,
       min: 0,
@@ -191,7 +354,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     staticNoiseIntensity: {
       key: "staticNoiseIntensity",
-      label: "Static_Noise_Intensity",
+      label: "Static noise intensity",
+      icon: "zodiac-aquarius",
       type: "number",
       value: 0.06,
       min: 0,
@@ -200,6 +364,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     aberration: {
       key: "aberration",
       label: "Aberration",
+      icon: "camera",
       type: "number",
       value: 0.03,
       min: 0,
@@ -208,6 +373,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     brightness: {
       key: "brightness",
       label: "Brightness",
+      icon: "sun",
       type: "number",
       value: 1.4,
       min: 0,
@@ -216,12 +382,14 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     discolor: {
       key: "discolor",
       label: "Discolor",
+      icon: "paintbrush",
       type: "boolean",
       value: true,
     },
     warpAmount: {
       key: "warpAmount",
-      label: "Warp_Amount",
+      label: "Warp amount",
+      icon: "barrel",
       type: "number",
       value: 1.0,
       min: 0,
@@ -230,13 +398,15 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     clipWarp: {
       key: "clipWarp",
-      label: "Clip_Warp",
+      label: "Clip warp",
+      icon: "barrel",
       type: "boolean",
       value: false,
     },
     vignetteIntensity: {
       key: "vignetteIntensity",
-      label: "Vignette_Intensity",
+      label: "Vignette intensity",
+      icon: "maximize",
       type: "number",
       value: 0.4,
       min: 0,
@@ -244,7 +414,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vignetteOpacity: {
       key: "vignetteOpacity",
-      label: "Vignette_Opacity",
+      label: "Vignette opacity",
+      icon: "maximize",
       type: "number",
       value: 0.5,
       min: 0,
@@ -254,7 +425,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
   crt: {
     pixelSize: {
       key: "pixelSize",
-      label: "Pixel_Size",
+      label: "Pixel size",
+      icon: "square-stack",
       type: "number",
       value: 8.0,
       min: 1,
@@ -266,6 +438,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     amount: {
       key: "amount",
       label: "Amount",
+      icon: "diff",
       type: "number",
       value: 1.25,
       min: 0.0,
@@ -275,6 +448,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     speed: {
       key: "speed",
       label: "Speed",
+      icon: "gauge",
       type: "number",
       value: 1.0,
       min: 0.1,
@@ -285,7 +459,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
   "lens-array": {
     gridSize: {
       key: "gridSize",
-      label: "Grid_Size",
+      label: "Grid size",
+      icon: "grid-3x3",
       type: "number",
       value: 50.0,
       min: 1,
@@ -295,6 +470,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     curvature: {
       key: "curvature",
       label: "Curvature",
+      icon: "spline",
       type: "number",
       value: 0.25,
       min: 0,
@@ -302,7 +478,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     gridAngle: {
       key: "gridAngle",
-      label: "Grid_Angle",
+      label: "Grid angle",
+      icon: "drafting-compass",
       type: "number",
       value: 0.0,
       min: 0,
@@ -311,6 +488,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     shape: {
       key: "shape",
       label: "Shape",
+      icon: "shapes",
       type: "select",
       value: "circle",
       options: {
@@ -334,6 +512,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     scale: {
       key: "scale",
       label: "Scale",
+      icon: "scaling",
       type: "array-2",
       value: [1, 1],
       min: 0,
@@ -343,6 +522,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     stagger: {
       key: "stagger",
       label: "Stagger",
+      icon: "layers-2",
       type: "boolean",
       value: true,
     },
@@ -351,6 +531,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     exposure: {
       key: "exposure",
       label: "Exposure",
+      icon: "aperture",
       type: "number",
       value: 1.0,
       min: 0,
@@ -359,6 +540,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     contrast: {
       key: "contrast",
       label: "Contrast",
+      icon: "contrast",
       type: "number",
       value: 1.05,
       min: 0,
@@ -367,6 +549,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     saturation: {
       key: "saturation",
       label: "Saturation",
+      icon: "paint-bucket",
       type: "number",
       value: 0.9,
       min: 0,
@@ -374,13 +557,15 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     enablePixelate: {
       key: "enablePixelate",
-      label: "Enable_Pixelate",
+      label: "Enable pixelate",
+      icon: "square-stack",
       type: "boolean",
       value: true,
     },
     pixelFactor: {
       key: "pixelFactor",
-      label: "Pixel_Factor",
+      label: "Pixel factor",
+      icon: "square-stack",
       type: "number",
       value: 2.0,
       min: 1,
@@ -388,13 +573,15 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     enablePosterize: {
       key: "enablePosterize",
-      label: "Enable_Posterize",
+      label: "Posterize",
+      icon: "spray-can",
       type: "boolean",
       value: true,
     },
     colorLevels: {
       key: "colorLevels",
-      label: "Color_Levels",
+      label: "Color levels",
+      icon: "spray-can",
       type: "number",
       value: 8.0,
       min: 1,
@@ -403,7 +590,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     ditherStrength: {
       key: "ditherStrength",
-      label: "Dither_Strength",
+      label: "Dither strength",
+      icon: "triangle-dashed",
       type: "number",
       value: 0.35,
       min: 0,
@@ -411,7 +599,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     chromAberration: {
       key: "chromAberration",
-      label: "Chrom_Aberration",
+      label: "Chrom aberration",
+      icon: "camera",
       type: "number",
       value: 0.35,
       min: 0,
@@ -419,7 +608,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vignetteStrength: {
       key: "vignetteStrength",
-      label: "Vignette_Strength",
+      label: "Vignette strength",
+      icon: "scaling",
       type: "number",
       value: 1.0,
       min: 0,
@@ -427,7 +617,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     grainStrength: {
       key: "grainStrength",
-      label: "Grain_Strength",
+      label: "Grain strength",
+      icon: "pencil",
       type: "number",
       value: 0.2,
       min: 0,
@@ -435,13 +626,15 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     tintColor: {
       key: "tintColor",
-      label: "Tint_Color",
+      label: "Tint color",
+      icon: "paint-bucket",
       type: "color",
       value: "#f2ffe6",
     },
     tintStrength: {
       key: "tintStrength",
-      label: "Tint_Strength",
+      label: "Tint strength",
+      icon: "paint-bucket",
       type: "number",
       value: 0.15,
       min: 0,
@@ -451,7 +644,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
   posterize: {
     noiseScale: {
       key: "noiseScale",
-      label: "Noise_Scale",
+      label: "Noise scale",
+      icon: "spray-can",
       type: "number",
       value: 1.0,
       min: 1,
@@ -460,7 +654,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     colorLevels: {
       key: "colorLevels",
-      label: "Color_Levels",
+      label: "Color levels",
+      icon: "paint-bucket",
       type: "number",
       value: 4,
       min: 0,
@@ -469,7 +664,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     ditherStrength: {
       key: "ditherStrength",
-      label: "Dither_Strength",
+      label: "Dither strength",
+      icon: "triangle-dashed",
       type: "number",
       value: 0.5,
       min: 0,
@@ -479,7 +675,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
   sepia: {
     noiseScale: {
       key: "noiseScale",
-      label: "Noise Scale",
+      label: "Noise scale",
+      icon: "spray-can",
       type: "number",
       value: 4.0,
       min: 1.0,
@@ -488,7 +685,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vignetteStrength: {
       key: "vignetteStrength",
-      label: "Vignette Strength",
+      label: "Vignette strength",
+      icon: "scaling",
       type: "number",
       value: 0.7,
       min: 0.1,
@@ -497,7 +695,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     sepiaStrength: {
       key: "sepiaStrength",
-      label: "Sepia Strength",
+      label: "Sepia strength",
+      icon: "gauge",
       type: "number",
       value: 0.85,
       min: 0.0,
@@ -507,6 +706,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     contrast: {
       key: "contrast",
       label: "Contrast",
+      icon: "contrast",
       type: "number",
       value: 1.2,
       min: 0.5,
@@ -515,7 +715,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     glowRange: {
       key: "glowRange",
-      label: "Glow Range",
+      label: "Glow range",
+      icon: "lightbulb",
       type: "number",
       value: 12.0,
       min: 1.0,
@@ -524,7 +725,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     glowStrength: {
       key: "glowStrength",
-      label: "Glow Strength",
+      label: "Glow strength",
+      icon: "lightbulb",
       type: "number",
       value: 0.75,
       min: 0.0,
@@ -533,7 +735,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     glowFalloff: {
       key: "glowFalloff",
-      label: "Glow Falloff",
+      label: "Glow falloff",
+      icon: "lightbulb",
       type: "number",
       value: 2.0,
       min: 0.5,
@@ -542,7 +745,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     dirtStrength: {
       key: "dirtStrength",
-      label: "Dirt Strength",
+      label: "Dirt strength",
+      icon: "tv",
       type: "number",
       value: 0.4,
       min: 0.0,
@@ -551,7 +755,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     dirtScale: {
       key: "dirtScale",
-      label: "Dirt Scale",
+      label: "Dirt scale",
+      icon: "tv",
       type: "number",
       value: 8.0,
       min: 1.0,
@@ -563,6 +768,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     resolutionX: {
       key: "resolutionX",
       label: "Resolution X",
+      icon: "arrow-left-right",
       type: "number",
       value: 320,
       min: 64,
@@ -572,6 +778,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     resolutionY: {
       key: "resolutionY",
       label: "Resolution Y",
+      icon: "arrow-up-down",
       type: "number",
       value: 240,
       min: 64,
@@ -580,7 +787,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     colorBitDepth: {
       key: "colorBitDepth",
-      label: "Color Bit Depth",
+      label: "Color bit depth",
+      icon: "layers-2",
       type: "number",
       value: 4,
       min: 1,
@@ -589,7 +797,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     ditherStrength: {
       key: "ditherStrength",
-      label: "Dither Strength",
+      label: "Dither strength",
+      icon: "triangle-dashed",
       type: "number",
       value: 0.03,
       min: 0.0,
@@ -598,7 +807,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     jitterAmount: {
       key: "jitterAmount",
-      label: "Jitter Amount",
+      label: "Jitter amount",
+      icon: "tv",
       type: "number",
       value: 0.008,
       min: 0.0,
@@ -607,7 +817,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     jitterSpeed: {
       key: "jitterSpeed",
-      label: "Jitter Speed",
+      label: "Jitter speed",
+      icon: "tv",
       type: "number",
       value: 1.2,
       min: 0.0,
@@ -616,7 +827,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     jitterFrequency: {
       key: "jitterFrequency",
-      label: "Jitter Frequency",
+      label: "Jitter frequency",
+      icon: "tv",
       type: "number",
       value: 180.0,
       min: 1.0,
@@ -625,7 +837,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     chromaticAberrationStrength: {
       key: "chromaticAberrationStrength",
-      label: "Chromatic Aberration Strength",
+      label: "Chromatic aberration",
+      icon: "camera",
       type: "number",
       value: 0.015,
       min: 0.0,
@@ -634,7 +847,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vignetteStrength: {
       key: "vignetteStrength",
-      label: "Vignette Strength",
+      label: "Vignette strength",
+      icon: "scaling",
       type: "number",
       value: 0.8,
       min: 0.0,
@@ -643,7 +857,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     vignetteRadius: {
       key: "vignetteRadius",
-      label: "Vignette Radius",
+      label: "Vignette radius",
+      icon: "scaling",
       type: "number",
       value: 0.9,
       min: 0.0,
@@ -654,7 +869,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
   "dithering-plus-color-palettes": {
     rows: {
       key: "rows",
-      label: "rows",
+      label: "Rows",
+      icon: "arrow-up-down",
       type: "number",
       value: 4.0,
       min: 1.0,
@@ -663,7 +879,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     cols: {
       key: "cols",
-      label: "cols",
+      label: "Cols",
+      icon: "arrow-left-right",
       type: "number",
       value: 4.0,
       min: 1.0,
@@ -672,7 +889,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     ditherSize: {
       key: "ditherSize",
-      label: "ditherSize",
+      label: "Dither size",
+      icon: "triangle-dashed",
       type: "number",
       value: 1.0,
       min: 1.0,
@@ -681,7 +899,8 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     },
     ditherAmount: {
       key: "ditherAmount",
-      label: "ditherAmount",
+      label: "Dither amount",
+      icon: "triangle-dashed",
       type: "number",
       value: 0.5,
       min: 0.0,
@@ -691,6 +910,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     pal: {
       key: "pal",
       label: "Palette",
+      icon: "palette",
       type: "select",
       value: "game_boy",
       options: {
@@ -761,6 +981,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     opacity: {
       key: "opacity",
       label: "Opacity",
+      icon: "blend",
       type: "number",
       value: 1.0,
       min: 0.0,
@@ -770,6 +991,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     pixelSize: {
       key: "pixelSize",
       label: "Pixel size",
+      icon: "square-stack",
       type: "number",
       value: 0.01,
       min: 0.001,
@@ -779,12 +1001,14 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     greyscale: {
       key: "greyscale",
       label: "Grey scale",
+      icon: "droplet-off",
       type: "boolean",
       value: true,
     },
     contrast: {
       key: "contrast",
       label: "Contrast",
+      icon: "contrast",
       type: "number",
       value: 1.0,
       min: 0.0,
@@ -794,12 +1018,14 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     pixelColors: {
       key: "pixelColors",
       label: "Pixel colors",
+      icon: "paintbrush",
       type: "color",
       value: "#ffffff",
     },
     backgroundColor: {
       key: "backgroundColor",
       label: "Background color",
+      icon: "paint-bucket",
       type: "color",
       value: "#000000",
     },
@@ -808,6 +1034,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     strength: {
       key: "strength",
       label: "Strength",
+      icon: "diff",
       type: "number",
       value: 1.0,
       min: 0.0,
@@ -817,6 +1044,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     radius: {
       key: "radius",
       label: "Radius",
+      icon: "radius",
       type: "number",
       value: 8.0,
       min: 1.0,
@@ -826,6 +1054,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     threshold: {
       key: "threshold",
       label: "Threshold",
+      icon: "scissors-line-dashed",
       type: "number",
       value: 0.5,
       min: 0.0,
@@ -835,6 +1064,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     softness: {
       key: "softness",
       label: "Softness",
+      icon: "feather",
       type: "number",
       value: 0.5,
       min: 0.01,
@@ -844,6 +1074,7 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
     saturationWeight: {
       key: "saturationWeight",
       label: "Saturation weight",
+      icon: "paint-bucket",
       type: "number",
       value: 1.0,
       min: 0.0,
@@ -851,4 +1082,44 @@ export const EFFECT_DEFAULTS: Record<Exclude<Effect, "none">, Record<string, Eff
       step: 0.05,
     },
   },
+};
+
+export const EFFECT_ICONS: Record<EffectInputIcon, React.ComponentType> = {
+  antenna: AntennaIcon,
+  aperture: ApertureIcon,
+  "arrow-left-right": ArrowLeftRightIcon,
+  "arrow-up-down": ArrowUpDownIcon,
+  barrel: BarrelIcon,
+  blend: BlendIcon,
+  camera: CameraIcon,
+  "circle-arrow-out-down-right": CircleArrowOutDownRightIcon,
+  contrast: ContrastIcon,
+  diff: DiffIcon,
+  "drafting-compass": DraftingCompassIcon,
+  "droplet-off": DropletOffIcon,
+  feather: FeatherIcon,
+  gauge: GaugeIcon,
+  "grid-3x3": Grid3x3Icon,
+  "layers-2": Layers2Icon,
+  lightbulb: LightbulbIcon,
+  maximize: MaximizeIcon,
+  "paint-bucket": PaintBucketIcon,
+  paintbrush: PaintbrushIcon,
+  palette: PaletteIcon,
+  pencil: PencilIcon,
+  radius: RadiusIcon,
+  "rows-4": Rows4Icon,
+  ruler: RulerIcon,
+  "scale-3d": Scale3dIcon,
+  scaling: ScalingIcon,
+  "scissors-line-dashed": ScissorsLineDashedIcon,
+  shapes: ShapesIcon,
+  shell: ShellIcon,
+  spline: SplineIcon,
+  "spray-can": SprayCanIcon,
+  "square-stack": SquareStackIcon,
+  sun: SunIcon,
+  "triangle-dashed": TriangleDashedIcon,
+  tv: TvIcon,
+  "zodiac-aquarius": ZodiacAquariusIcon,
 };
